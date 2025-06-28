@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: Spring_AI_ES
+  profiles:
+    active: dev

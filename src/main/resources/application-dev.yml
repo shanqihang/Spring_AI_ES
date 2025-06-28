@@ -1,0 +1,24 @@
+spring:
+  ai:
+    openai: #deepseek官方api
+      api-key: sk-7e96c57f247548f3a8ca56aa07846e38
+      base-url: https://api.deepseek.com/v1/chat/completions
+      chat:
+        options:
+          model: deepseek-chat
+
+      embedding: #阿里云向量模型
+        base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+        api-key: sk-4dc833478b41406d829023baa222b6f6
+        options:
+          model: text-embedding-v4
+  elasticsearch:
+    uris: https://localhost:9200
+    username: elastic
+    password: 123ABCdef*
+
+confidentiality:
+  threshold: 0.8
+
+server:
+  port: 8081
