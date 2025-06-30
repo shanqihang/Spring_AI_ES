@@ -1,4 +1,4 @@
-package com.llm.service.iml;
+package com.llm.service.impl;
 
 import com.llm.Dto.SensitiveData;
 import com.llm.model.SensitiveDataDocument;

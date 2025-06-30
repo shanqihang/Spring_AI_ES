@@ -1,4 +1,4 @@
-package com.llm.service.iml;
+package com.llm.service.impl;
 
 import com.llm.Dto.DetectionResult;
 import com.llm.Dto.MatchedSensitiveData;
@@ -23,6 +23,9 @@ import java.util.stream.Collectors;
 public class EsBasedConfidentialityDetector implements ConfidentialityDetector {
     @Resource
     SensitiveDataRepository repository;
+    @Resource
+    ElasticsearchOperations elasticsearchOperations;
+
     @Resource
     EmbeddingModel embeddingModel;
     @Value("${confidentiality.threshold}")
@@ -50,8 +53,6 @@ public class EsBasedConfidentialityDetector implements ConfidentialityDetector {
     }
 
 
-    @Resource
-    ElasticsearchOperations elasticsearchOperations;
     SearchHits<SensitiveDataDocument> findSimilarByContentVector(float[] vector) {
         List<Float> vectorList = new ArrayList<>(vector.length);
         for (float f : vector) {
@@ -78,6 +79,18 @@ public class EsBasedConfidentialityDetector implements ConfidentialityDetector {
         return data;
     }
 
+
+    /**
+     * 计算敏感信息检测结果的综合置信度分数:
+     * 1.空值处理：如果匹配结果为空，直接返回0分
+     * 2.计算最大相似度：找出所有匹配项中的最高相似度分数
+     * 3.计算加权平均：对(相似度×敏感级别)的值求平均
+     * 4.综合评分：按6:4的权重组合：
+     *   60%权重给最大相似度
+     *   40%权重给(加权平均值/5)，这里5可能是敏感级别的最大值
+     * @param matches
+     * @return
+     */
     private double calculateScore(List<MatchedSensitiveData> matches) {
         if (matches.isEmpty()) {
             return 0.0;

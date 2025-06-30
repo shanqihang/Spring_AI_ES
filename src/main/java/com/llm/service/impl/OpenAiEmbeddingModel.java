@@ -1,17 +1,15 @@
-package com.llm.service.iml;
+package com.llm.service.impl;
 
 import com.llm.service.EmbeddingModel;
 import com.openai.client.OpenAIClient;
 import com.openai.client.okhttp.OpenAIOkHttpClient;
 import com.openai.models.embeddings.CreateEmbeddingResponse;
 import com.openai.models.embeddings.EmbeddingCreateParams;
-import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.IntStream;
 
 @Service("customOpenAiEmbeddingModel")

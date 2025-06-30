@@ -1,4 +1,4 @@
-package com.llm.service.iml;
+package com.llm.service.impl;
 
 import com.llm.Dto.CheckedResponse;
 import com.llm.Dto.DetectionResult;
@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Service
 public class OpenAiLlmServiceImpl implements LargeLanguageModelService {
-    private  RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
     @Resource
     private  ConfidentialityDetector detector;
 
